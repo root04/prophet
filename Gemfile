@@ -9,6 +9,7 @@ gem 'coffee-rails', '~> 4.1.0'
 # gem 'therubyracer', platforms: :ruby
 gem 'haml-rails'
 gem 'bower-rails'
+gem 'gon'
 
 gem 'jquery-rails'
 gem 'turbolinks'
