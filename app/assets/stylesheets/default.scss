@@ -1,0 +1,41 @@
+.input_retention {
+  margin: 5px;
+}
+
+.retention {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.retention_temp {
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+/* 黒 */
+.TableStyle {
+    border-top: 1px solid #333333;
+    border-left: 1px solid #333333;
+    border-collapse: collapse;
+    border-spacing: 0;
+    empty-cells: show;
+}
+.TableStyle_TH {
+    border-right: 1px solid #333333;
+    color: #FFFFFF;
+    background-color: #000000;
+    padding: 0.3em 1em;
+    text-align: center;
+}
+.TableStyle_TD {
+    border-right: 1px solid #333333;
+    border-left: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    padding: 0.3em 1em;
+}
+.TableStyle_TR:nth-child(even) {
+    background: #D9D9D9;
+}
+.TableStyle_TD_RED {
+    background-color: #D46A6A;
+}

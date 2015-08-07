@@ -1,0 +1,24 @@
+- if @retention_hash
+  .retention
+    %table.TableStale
+      %tr.TableStyle_TR
+        %th.TableStyle_TH
+          Days past
+        %th.TableStyle_TH
+          Retention
+          - @retention_hash.each do |day, val|
+            %tr.TableStyle_TR
+              - if @interpolated_data[day] == true
+                %td.TableStyle_TD.TableStyle_TD_RED.days
+                  - if day == 1
+                    #{day} day
+                  - else
+                    #{day} days
+              - else
+                %td.TableStyle_TD.days
+                  - if day == 1
+                    #{day} day
+                  - else
+                    #{day} days
+              %td.TableStyle_TD.retention
+                #{val} %
