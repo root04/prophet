@@ -3,29 +3,64 @@
 = render 'show_messages'
 
 .col-md-6
+  %i{ class: "fa fa-plus-square fa-2x addRetentionField" }
   = form_tag root_path, method: :get do
+    .form-group.new_retention
+      = label_tag :newusers, 'Number of NU/day'
+      = number_field_tag 'newusers', 1000
     .form-group.new_retention
       = label_tag :project_id, 'Project'
       .retentions
         = label_tag :Day, 'Days after'
-      .retentions
-        = number_field_tag 'retention[date][]'     , 1
-        = number_field_tag 'retention[value][]', params[:retention2], class: 'input_retention', step: 0.1, max: 100, min: 0
-        \%
-      .retentions
-        = number_field_tag 'retention[date][]'     , 2
-        = number_field_tag 'retention[value][]', params[:retention2], class: 'input_retention', step: 0.1, max: 100, min: 0
-        \%
-      .retentions
-        = number_field_tag 'retention[date][]'     , 3
-        = number_field_tag 'retention[value][]', params[:retention2], class: 'input_retention', step: 0.1, max: 100, min: 0
-        \%
-        %i{ class: "fa fa-plus-square fa-2x addRetentionField" }
-
-      = submit_tag 'submit', class: 'btn btn-default'
+      - if @retention_hash
+        - @retention_hash.each_pair do |day, retention|
+          - if !@interpolated_data[day]
+            .retentions
+              = number_field_tag 'retention[date][]'     , day
+              = number_field_tag 'retention[value][]', params[:retention2], class: 'input_retention', step: 0.1, max: 100, min: 0, value: retention
+              \%
+      - else
+        = render 'default_retention'
+    = submit_tag 'submit', class: 'btn btn-default'
+  = link_to 'Load Retention', '#', class: 'load-retention btn btn-default'
 
 .col-md-6
   .plan
-    %canvas#graph_canvas{ :width =>'800', :height => '300'}
+    #chart1
 
   = render 'retention_input'
+
+  :javascript
+    $(function() {
+      var chart;
+      var data;
+
+      nv.addGraph(function() {
+        chart = nv.models.lineChart().options({
+          transitionDuration: 300,
+          useInteractiveGuideline: true
+        });
+        chart.xAxis.axisLabel("Date after start (days))").tickFormat(d3.format(',.d')).staggerLabels(true);
+        chart.yAxis.axisLabel('Retention (%)').tickFormat(function(d) {
+          if (d == null) {
+            return 'N/A';
+          }
+          return d3.format(',.2f')(d);
+        });
+        data = getdata();
+        d3.select('#chart1').append('svg').datum(data).call(chart);
+        nv.utils.windowResize(chart.update);
+        return chart;
+      });
+
+      function getdata() {
+        return [
+          {
+            values: gon.retention,
+            key: "retention",
+            color: "#ff7f0e",
+            strokeWidth: 2,
+          }
+        ];
+      }
+    });
