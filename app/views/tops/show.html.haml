@@ -4,7 +4,7 @@
 
 .col-md-6
   %i{ class: "fa fa-plus-square fa-2x addRetentionField" }
-  = form_tag root_path, method: :get do
+  = form_tag post_path, method: :post do
     .form-group.new_retention
       = label_tag :newusers, 'Number of NU/day'
       = number_field_tag 'newusers', 1000
