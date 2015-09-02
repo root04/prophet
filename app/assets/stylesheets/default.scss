@@ -39,3 +39,26 @@
 .TableStyle_TD_RED {
     background-color: #D46A6A;
 }
+
+svg {
+  display: block;
+}
+
+html, body, #chart1, svg {
+  margin: 0px;
+  padding: 0px;
+  height: 300px;
+  width: 800px;
+}
+
+.dashed {
+  stroke-dasharray: 5,5;
+}
+
+#retention_date_ {
+  width: 80px;
+}
+
+#retention_value_ {
+  width: 80px;
+}

@@ -85,6 +85,7 @@ class TopController < ApplicationController
   end
 
   def interpolate_retention
+    @retention_array = Array.new
     interpolation_wdata_hash = {}
     interpolation_wodata_hash = {}
     @retention_hash.each_pair do |day, retention|
@@ -96,10 +97,15 @@ class TopController < ApplicationController
     end
 
     interpolation_wdata_hash.each_cons(2) do |data1, data2|
+      @retention_array.push({'x': data1[0], 'y': data1[1]})
       if data2[0] - data1[0] > 1
         interpolate(data1[0], data1[1], data2[0], data2[1])
       end
     end
+
+    lastkey = interpolation_wdata_hash.keys.last
+    @retention_array.push({'x': lastkey, 'y': interpolation_wdata_hash[lastkey]})
+    gon.retention = @retention_array
   end
 
   def interpolate(x1, y1, x2, y2)
@@ -107,6 +113,7 @@ class TopController < ApplicationController
       y = y1.to_f + (y2.to_f - y1.to_f) / (x2.to_f - x1.to_f) * (x.to_f - x1.to_f)
       @retention_hash[x] = y
       @interpolated_data[x] = true
+      @retention_array.push({'x': x, 'y': y})
     end
   end
 
