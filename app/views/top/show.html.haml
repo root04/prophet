@@ -29,38 +29,3 @@
     #chart1
 
   = render 'retention_input'
-
-  :javascript
-    $(function() {
-      var chart;
-      var data;
-
-      nv.addGraph(function() {
-        chart = nv.models.lineChart().options({
-          transitionDuration: 300,
-          useInteractiveGuideline: true
-        });
-        chart.xAxis.axisLabel("Date after start (days))").tickFormat(d3.format(',.d')).staggerLabels(true);
-        chart.yAxis.axisLabel('Retention (%)').tickFormat(function(d) {
-          if (d == null) {
-            return 'N/A';
-          }
-          return d3.format(',.2f')(d);
-        });
-        data = getdata();
-        d3.select('#chart1').append('svg').datum(data).call(chart);
-        nv.utils.windowResize(chart.update);
-        return chart;
-      });
-
-      function getdata() {
-        return [
-          {
-            values: gon.retention,
-            key: "retention",
-            color: "#ff7f0e",
-            strokeWidth: 2,
-          }
-        ];
-      }
-    });
