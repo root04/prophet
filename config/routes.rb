@@ -1,3 +1,4 @@
 Rails.application.routes.draw do
-  root 'top#show'
+  root 'tops#show'
+  post 'post' => 'tops#post'
 end

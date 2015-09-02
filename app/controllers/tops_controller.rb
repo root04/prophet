@@ -1,4 +1,4 @@
-class TopController < ApplicationController
+class TopsController < ApplicationController
 
   before_action :detect_retention
   before_action :validate_date
@@ -6,11 +6,12 @@ class TopController < ApplicationController
   before_action :interpolate_date
 
   def show
+  end
+
+  def post
     minYRange = 0
     maxYRange = 100
 
-    #timeScale = ['days', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
-    #fooNum    = ['test', 10, 20, 30, 50, 22, 70, 180, 10, 100, 110, 20, 130, 10, 150, 0]
     if @retention_hash
       timeScale = @retention_hash.keys.unshift("Days")
       fooNum    = @retention_hash.values.unshift("Retention(%)")
@@ -37,6 +38,8 @@ class TopController < ApplicationController
         },
       data: data
     }
+
+    render action: :show
   end
 
   private
